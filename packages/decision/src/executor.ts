@@ -79,7 +79,11 @@ function checkModel(model: unknown): void {
 }
 /** A plain object whose every value is a plain object: the shape the AI SDK takes as providerOptions. */
 function isOptionsRecord(value: unknown): boolean {
-  const isRecord = (v: unknown): boolean => typeof v === 'object' && v !== null && !Array.isArray(v);
+  const isRecord = (v: unknown): boolean => {
+    if (typeof v !== 'object' || v === null) return false;
+    const prototype: unknown = Object.getPrototypeOf(v);
+    return prototype === Object.prototype || prototype === null;
+  };
   return isRecord(value) && Object.values(value as object).every(isRecord);
 }
 function inUnit(value: number): boolean {

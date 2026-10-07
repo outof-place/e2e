@@ -52,6 +52,8 @@ describe('construction', () => {
     ['an array', []],
     ['a string', 'gateway'],
     ['a provider mapped to a non-object', { gateway: true }],
+    ['a class instance', new Date()],
+    ['a provider mapped to a class instance', { gateway: new Date() }],
   ])('rejects providerOptions that are %s', (_name, providerOptions) => {
     const { model } = scriptedDecision(() => ({ choice: 'done' }));
     expect(() => decisionExecutor({ model, providerOptions: providerOptions as never })).toThrow(invalidConfig('maps provider names to option objects'));
